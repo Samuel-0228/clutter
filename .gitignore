@@ -33,8 +33,9 @@ yarn-error.*
 # local env files
 .env
 .env.*
-!.env.example
+
 .env*.local
+.env.example
 
 # editor settings
 .vscode/

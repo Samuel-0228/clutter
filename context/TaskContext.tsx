@@ -1,16 +1,24 @@
 import * as Haptics from "expo-haptics";
-import { createContext, ReactNode, useContext, useEffect, useMemo, useRef, useState } from "react";
+import {
+    createContext,
+    ReactNode,
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import { useAuth } from "@/context/AuthContext";
-import {
-  createRemoteTask,
-  deleteRemoteTask,
-  fetchRemoteTasks,
-  subscribeToTaskChanges,
-  unsubscribeFromTaskChanges,
-  updateRemoteTask,
-} from "@/services/taskService";
 import { readItem, saveItem } from "@/services/storage";
+import {
+    createRemoteTask,
+    deleteRemoteTask,
+    fetchRemoteTasks,
+    subscribeToTaskChanges,
+    unsubscribeFromTaskChanges,
+    updateRemoteTask,
+} from "@/services/taskService";
 import { Task, TaskInput } from "@/types/task";
 
 const TASK_CACHE_KEY = "taskapp:tasks-cache";
@@ -47,7 +55,10 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     async function bootstrap() {
       setLoading(true);
 
-      const cachedTasks = await readItem<Task[]>(`${TASK_CACHE_KEY}:${userId}`, []);
+      const cachedTasks = await readItem<Task[]>(
+        `${TASK_CACHE_KEY}:${userId}`,
+        [],
+      );
       if (active) {
         setTasks(sortTasks(cachedTasks));
       }
@@ -68,8 +79,9 @@ export function TaskProvider({ children }: { children: ReactNode }) {
   }, [session, userId]);
 
   useEffect(() => {
-    saveItem(`${TASK_CACHE_KEY}:${userId}`, tasks).catch(() => {
-      // Cache writes are best effort.
+    saveItem(`${TASK_CACHE_KEY}:${userId}`, tasks).catch((err) => {
+      // Cache writes are best effort, but surface errors to logs.
+      console.error("Failed to save tasks to cache", err);
     });
   }, [tasks, userId]);
 
@@ -79,8 +91,8 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     if (!session) return;
 
     const channel = subscribeToTaskChanges(userId, () => {
-      refreshTasks().catch(() => {
-        // Network recovery will pick up the next refresh.
+      refreshTasks().catch((err) => {
+        console.error("Failed to refresh tasks from realtime event", err);
       });
     });
 
@@ -128,7 +140,11 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     if (!remoteTask) return;
 
     setTasks((current) =>
-      sortTasks(current.map((task) => (task.id === optimisticTask.id ? remoteTask : task))),
+      sortTasks(
+        current.map((task) =>
+          task.id === optimisticTask.id ? remoteTask : task,
+        ),
+      ),
     );
   }
 
@@ -143,8 +159,10 @@ export function TaskProvider({ children }: { children: ReactNode }) {
           ...task,
           ...updates,
           updatedAt: new Date().toISOString(),
-          title: updates.title !== undefined ? updates.title.trim() : task.title,
-          notes: updates.notes !== undefined ? updates.notes.trim() : task.notes,
+          title:
+            updates.title !== undefined ? updates.title.trim() : task.title,
+          notes:
+            updates.notes !== undefined ? updates.notes.trim() : task.notes,
           synced: !session ? true : false,
         };
 
@@ -158,7 +176,9 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     const remoteTask = await updateRemoteTask(id, updates);
     if (!remoteTask) return;
 
-    setTasks((current) => current.map((task) => (task.id === id ? remoteTask : task)));
+    setTasks((current) =>
+      current.map((task) => (task.id === id ? remoteTask : task)),
+    );
   }
 
   async function toggleTask(id: string) {

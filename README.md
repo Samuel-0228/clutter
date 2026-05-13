@@ -1,62 +1,118 @@
-# Welcome to your Expo app 👋
+# TaskApp 📱
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+TaskApp is a modern mobile task management application built using Expo React Native and TypeScript.
 
----
-
-## 🚀 Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the development server
-
-   ```bash
-   npx expo start
-   ```
-
-In the terminal output, you’ll see options to open the app in:
-
-- [Development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go) — a sandbox app for trying out Expo development
-
-You can start developing by editing the files inside the **`app`** directory.  
-This project uses **[file‑based routing](https://docs.expo.dev/router/introduction)**.
+The app allows users to create, complete, and manage tasks with a clean and responsive mobile UI.
 
 ---
 
-## 🧹 Get a fresh project
+## ✨ Features
 
-When you’re ready to replace the starter code:
+- Add tasks
+- Delete tasks
+- Mark tasks as completed
+- Completed tasks screen
+- Persistent local storage
+- Bottom tab navigation
+- Modern dark UI
+- Mobile-first responsive design
 
-```bash
-npm run reset-project
+---
+
+## 🛠 Tech Stack
+
+- React Native
+- Expo
+- TypeScript
+- Expo Router
+- Context API
+- AsyncStorage
+- Expo Vector Icons
+
+---
+
+## 📂 Project Structure
+
+```txt
+app/
+components/
+context/
+types/
+storage/
 ```
 
-This command:
+---
 
-- Moves the starter code to the **`app-example`** directory
-- Creates a blank **`app`** directory for you to build your own app in
+## 🚀 Getting Started
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/yourusername/taskapp.git
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Start Development Server
+
+```bash
+npx expo start
+```
+
+### 4. Run on Device
+
+- Install Expo Go on your phone
+- Scan QR code
 
 ---
 
-## 📚 Learn more
+## 📦 Build APK
 
-To learn how to develop and customize this project with Expo, check:
+Install EAS CLI:
 
-- [Expo Documentation](https://docs.expo.dev/) — fundamentals and advanced guides
-- [Learn Expo Tutorial](https://docs.expo.dev/tutorial/introduction/) — a step‑by‑step guide for building a cross‑platform app (Android, iOS, and web)
+```bash
+npm install -g eas-cli
+```
+
+Configure EAS:
+
+```bash
+eas build:configure
+```
+
+Build APK:
+
+```bash
+eas build -p android --profile preview
+```
 
 ---
 
-## 👥 Join the community
+## 📱 APK Installation
 
-Join our community of developers building universal apps with Expo:
+1. Download APK
+2. Enable "Install Unknown Apps" on Android
+3. Install APK manually
 
-- [Expo on GitHub](https://github.com/expo/expo) — the open‑source Expo platform
-- [Expo Discord](https://chat.expo.dev) — chat with Expo users and ask questions in real time
+---
+
+## 🔮 Future Improvements
+
+- Authentication
+- Cloud synchronization
+- Push notifications
+- Swipe gestures
+- Animations
+- Task categories
+- Due dates
+- Offline sync
+
+---
+
+## 📄 License
+
+MIT License
